@@ -1,18 +1,15 @@
-use imageproc::point::Point;
+use bivariate::Bivariate;
 use rand::{
     distributions::{Distribution, Uniform},
     thread_rng,
 };
 
-use crate::random_point::RandomPoint;
-
-mod random_point;
+mod bivariate;
+mod triangle;
 
 pub fn run() {
     let mut rng = thread_rng();
-    let uniform = Uniform::new(
-        RandomPoint::new(Point { x: 0, y: 0 }),
-        RandomPoint::new(Point { x: 1, y: 2 }),
-    );
-    println!("{:?}", uniform.sample(&mut rng).into_inner());
+    let dist = Bivariate::new(Uniform::new_inclusive(0, 10), Uniform::new_inclusive(0, 10));
+    let t = dist.sample(&mut rng);
+    println!("{:?}", t);
 }
